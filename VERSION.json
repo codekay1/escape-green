@@ -1,10 +1,10 @@
 {
   "name": "Escape Green",
   "version": "0.1.0",
-  "builtAtUtc": "20261110T235206Z",
+  "builtAtUtc": "20261111T005633Z",
   "channel": "hosted-qa-release-candidate",
   "testApi": false,
   "sourcemaps": false,
   "downloadZip": "download/escape-green.zip",
-  "notes": "Escape Green 0.1.0-r3. Chunky 32 px HUD hearts with a dark outline and a clear empty state. Minecraft-style first-person sword (silver blade, gold crossguard, wrapped grip) with I/B docked at the right of the hotbar. Translucent jelly slimes. Denser dusk jungle with tall trunks, layered canopy overhead, hanging vines, and near-camera ferns and big leaves. Keep-playing overlay still clears held movement. Right-click with a block selected places that block. Touch controls fill the viewport at tablet and phone sizes (joystick, jump, attack, build). HUD SVG icons are original to this project. Save schema: engine v5 plus Escape Green schema v1. IDB name and Workbox cacheId prefix stay escape-green. SW denylist unchanged. Debug stays inert without ?debug. PROXY draw-call caps: High <=150, Low <=70 (Low target <=62). Do not mutate after SHA256SUMS."
+  "notes": "Escape Green 0.1.0-r4. Double-tap Space (350 ms window, timed at keydown) starts flight; holding Space climbs in wall-clock time, Shift or C descends, and a Flying HUD chip plus toasts make the state obvious. ?debug shows an aggro readout (state, angry count, distance vs 40 m) and ?debug&coins=N grants coins (F8 grants +10); both are inert without ?debug. Phone-size touch controls sit above the hearts and hotbar. Retired biome ids, companion display names, the old camp barn landmark and its sign, a retired book item, an old service-worker comment, and a private art-folder path are stripped. HUD SVG icons are original to this project. Save schema: engine v5 plus Escape Green schema v1. IDB name and Workbox cacheId prefix stay escape-green. SW denylist unchanged. PROXY draw-call caps: High <=150, Low <=70 (Low target <=62). Do not mutate after SHA256SUMS."
 }

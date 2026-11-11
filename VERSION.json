@@ -1,10 +1,10 @@
 {
   "name": "Escape Green",
   "version": "0.1.0",
-  "builtAtUtc": "20261111T005633Z",
+  "builtAtUtc": "20261111T020442Z",
   "channel": "hosted-qa-release-candidate",
   "testApi": false,
   "sourcemaps": false,
   "downloadZip": "download/escape-green.zip",
-  "notes": "Escape Green 0.1.0-r4. Double-tap Space (350 ms window, timed at keydown) starts flight; holding Space climbs in wall-clock time, Shift or C descends, and a Flying HUD chip plus toasts make the state obvious. ?debug shows an aggro readout (state, angry count, distance vs 40 m) and ?debug&coins=N grants coins (F8 grants +10); both are inert without ?debug. Phone-size touch controls sit above the hearts and hotbar. Retired biome ids, companion display names, the old camp barn landmark and its sign, a retired book item, an old service-worker comment, and a private art-folder path are stripped. HUD SVG icons are original to this project. Save schema: engine v5 plus Escape Green schema v1. IDB name and Workbox cacheId prefix stay escape-green. SW denylist unchanged. PROXY draw-call caps: High <=150, Low <=70 (Low target <=62). Do not mutate after SHA256SUMS."
+  "notes": "Escape Green 0.1.0-r5. G toggles flight; double-tap Space (450 ms window, timed at keydown) still works, including a second tap that arrives during the 60 ms hold-defer. Holding Space climbs, Shift or C descends, and a Flying HUD chip plus toasts make the state obvious. A touch Fly button matches G. ?debug F9 teleports 50 m along facing and lands on terrain (inert without ?debug). ?debug shows an aggro readout and ?debug&coins=N grants coins (F8 grants +10). Tablet Move stick sits above the hearts; phone hints no longer overlap the sticks or clip the hotbar; touch attack prompts say Tap Attack. Retired biome ids, companion display names, the old camp barn landmark and its sign, a retired book item, an old service-worker comment, and a private art-folder path are stripped. HUD SVG icons are original to this project. Save schema: engine v5 plus Escape Green schema v1. IDB name and Workbox cacheId prefix stay escape-green. SW denylist unchanged. PROXY draw-call caps: High <=150, Low <=70 (Low target <=62). Do not mutate after SHA256SUMS."
 }

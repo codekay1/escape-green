@@ -1,11 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Escape Green - coming soon</title>
-</head>
+  <script>
+    // Subpath/root safety for relative base './' (GitHub Pages project sites).
+    // If the path has no trailing slash and is not a file (.html), redirect to slash
+    // so ./assets and ./sw.js resolve under the project prefix, not the domain root.
+    (function () {
+      var p = location.pathname;
+      if (p.length > 1 && !p.endsWith('/') && !/\.[a-zA-Z0-9]+$/.test(p)) {
+        location.replace(p + '/' + location.search + location.hash);
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#3a7fd4" />
+  <meta name="description" content="Escape Green — offline slime adventure" />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon-CZcMHXGO.svg" />
+  <title>Escape Green</title>
+  <script type="module" crossorigin src="./assets/index-BujYSPLd.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DmO8DATa.css">
+<link rel="manifest" href="./manifest.webmanifest"></head>
 <body>
-  <p>Escape Green - coming soon</p>
+  <div id="no-webgl" class="overlay hidden">
+    <div class="panel">
+      <h1>WebGL needed</h1>
+      <p>This game needs WebGL in Chrome. Try updating Chrome or enabling hardware acceleration.</p>
+    </div>
+  </div>
+
+  <canvas id="game" tabindex="0" aria-label="Escape Green game view"></canvas>
+
+  <div id="hud">
+    <div id="hud-brand">ESCAPE GREEN</div>
+    <div id="coin-pill" class="coin-badge" title="Coins">
+      <span class="coin-glyph" aria-hidden="true"></span>
+      <span id="coin-amount">0</span>
+    </div>
+    <div id="hearts-wrap">
+      <div class="hearts-label">HEARTS</div>
+      <div id="hearts" aria-label="Hearts"></div>
+    </div>
+    <div id="crosshair" aria-hidden="true"></div>
+    <div id="context-prompt" aria-live="polite"></div>
+    <div id="dmg-layer" aria-hidden="true"></div>
+    <div id="toast" role="status"></div>
+    <div id="fire-glow" aria-hidden="true"></div>
+    <div id="fire-whoosh" aria-hidden="true">🔥</div>
+    <div id="selected-item"></div>
+    <div id="objective" class="objective"></div>
+    <div id="hotbar-wrap">
+      <div id="hotbar" aria-label="Hotbar"></div>
+      <div id="hud-util">
+        <button id="btn-bag" type="button" class="hud-icon-btn" title="Backpack (I)" aria-label="Open backpack">I</button>
+        <button id="btn-build" type="button" class="hud-icon-btn" title="Build house (B)" aria-label="Open build menu (B)">B</button>
+      </div>
+    </div>
+    <div id="legacy-hud" hidden>
+      <div id="hud-top">
+        <div id="level-wrap" title="How close to a new level">
+          <span class="lev-label">Lev <span id="lev-cur">1</span></span>
+          <div id="level-bar"><div id="level-fill"></div></div>
+          <span class="lev-label">Lev <span id="lev-next">2</span></span>
+        </div>
+        <div id="status-pills">
+          <span id="mode-pill" class="pill">Safe Build</span>
+          <span id="detector" class="pill dim">Tracker: —</span>
+        </div>
+        <div id="nav-row" aria-label="Navigation">
+          <span id="nav-compass" title="Home">⌂</span>
+          <span id="nav-biome">Jungle · 0 m from home</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="day-veil" aria-hidden="true"></div>
+  <div id="sleep-fade" aria-hidden="true"></div>
+
+  <div id="inv-overlay" class="overlay hidden" role="dialog" aria-label="Backpack">
+    <div class="panel wide">
+      <h2>Backpack</h2>
+      <p class="tiny">Items you are carrying. Number keys still switch the hotbar.</p>
+      <div id="inv-grid" class="inv-grid"></div>
+      <h3 class="craft-heading">Craft</h3>
+      <p class="tiny">Use wood and stone from your hotbar or bag.</p>
+      <div id="craft-list" class="craft-list"></div>
+      <button id="btn-inv-close" type="button" class="secondary">Close (I)</button>
+    </div>
+  </div>
+
+  <div id="touch">
+    <div id="touch-move" class="stick" aria-label="Move stick"><span class="stick-label">Move</span></div>
+    <div id="touch-look" class="stick" aria-label="Look stick"><span class="stick-label">Look</span></div>
+    <button id="touch-jump" type="button">Jump</button>
+    <button id="touch-action" type="button">Attack</button>
+    <button id="touch-recenter" type="button" title="Recenter look (C / Home)">Level view</button>
+    <button id="touch-build" type="button">Build</button>
+  </div>
+
+  <div id="keep-playing" class="overlay hidden" role="dialog" aria-label="Tap to keep playing">
+    <button type="button" id="keep-playing-btn" class="keep-playing-card">
+      <span class="keep-playing-title">Tap to keep playing ▶</span>
+      <span class="keep-playing-sub">Click or tap here so your keys reach the game.</span>
+    </button>
+  </div>
+
+  <div id="title" class="overlay">
+    <div class="panel title-panel">
+      <div id="title-hero-preview" aria-hidden="true"></div>
+      <h1>Escape Green</h1>
+      <p id="test-build-badge" class="test-build-badge hidden" aria-live="polite"></p>
+      <p id="title-version" class="version-tag">v0.1.0</p>
+      <p class="lead">A spooky-but-friendly jungle. Slimes stay peaceful until you swing first.</p>
+      <div class="title-actions">
+        <button id="btn-start" type="button" class="primary">Play</button>
+        <div class="row">
+          <button id="btn-howto" type="button" class="secondary">How to play</button>
+          <button id="btn-install-info" type="button" class="secondary">Install / offline</button>
+        </div>
+      </div>
+      <p class="tiny">Offline-friendly · local saves · no accounts</p>
+      <p id="test-import-note" class="test-import-note hidden"></p>
+    </div>
+  </div>
+
+  <div id="howto" class="overlay hidden">
+    <div class="panel wide">
+      <h1>How to play</h1>
+      <ul class="howto-list">
+        <li><kbd>WASD</kbd> move · hold <kbd>Shift</kbd> to run · <kbd>Space</kbd> jump · double-tap <kbd>Space</kbd> to fly (again to land)</li>
+        <li>Click the game to look around. <strong>Left click</strong> = sword swing.</li>
+        <li id="help-hotbar-slots"><kbd>1</kbd> Sword · <kbd>2</kbd> Bread · <kbd>3</kbd> Wood block · <kbd>4</kbd> Stone block · <kbd>5</kbd> Axe</li>
+        <li>Slimes never attack first. After you hit one, nearby slimes join in. Walk more than 40 m from where you hit to calm them.</li>
+        <li>If you run out of hearts you wake up at home. Some coins drop at the spot so you can go pick them up.</li>
+        <li>Number keys <kbd>1</kbd>–<kbd>7</kbd> switch the hotbar. Hold a sword to fight.</li>
+        <li>Press <kbd>I</kbd> to open your backpack and craft. Press <kbd>B</kbd> to build.</li>
+        <li>Animals are friendly and never hurt you. They also never make slimes angry.</li>
+        <li><kbd>C</kbd> or <kbd>Home</kbd> (or Look button) recenters the camera if it tips up.</li>
+        <li>Esc = pause / save / install tips.</li>
+      </ul>
+      <button id="btn-howto-close" type="button" class="primary">Got it</button>
+    </div>
+  </div>
+
+  <div id="install-panel" class="overlay hidden">
+    <div class="panel wide">
+      <h1>Install / offline</h1>
+      <ul class="install-list">
+        <li>Play online once until the HUD shows <strong>Offline ready</strong>.</li>
+        <li>Bookmark this page, or use your browser’s “Install” / “Add to …” option if offered (labels vary by Chrome version — we don’t invent ChromeOS menu names).</li>
+        <li>Quit the browser fully, turn network off, then open the bookmark — the game should load from cache.</li>
+        <li><strong>ZIP archive</strong> (download link in pause) is a static site backup for hosting — it is <em>not</em> a <code>file://</code> app installer.</li>
+        <li>Export Save makes a JSON backup. Local saves stay on this device for this site address; powerwash or clearing site data can erase them.</li>
+      </ul>
+      <p id="install-offline-status" class="note">Offline status: checking…</p>
+      <button id="btn-install-close" type="button" class="primary">Got it</button>
+    </div>
+  </div>
+
+
+  <div id="shop-overlay" class="overlay hidden" role="dialog" aria-label="Shop">
+    <div class="panel wide">
+      <h2 id="shop-title">Shop</h2>
+      <p id="shop-keeper" class="tiny"></p>
+      <p id="shop-coins" class="tiny">You have 0 coins</p>
+      <div id="shop-list" class="shop-list"></div>
+      <button id="btn-shop-close" type="button" class="secondary">Close</button>
+    </div>
+  </div>
+
+  <div id="build-overlay" class="overlay hidden" role="dialog" aria-label="Build house">
+    <div class="panel wide">
+      <h2>Build your house</h2>
+      <p class="tiny">Gather wood and stone, pick a piece, then look at the ground and right-click to place. Press X to remove a piece you are looking at.</p>
+      <div id="build-list" class="shop-list">
+        <button type="button" data-piece="floor">Floor — 1 wood</button>
+        <button type="button" data-piece="wall">Wall — 2 wood</button>
+        <button type="button" data-piece="roof">Roof — 2 wood</button>
+        <button type="button" data-piece="door">Door — 2 wood</button>
+        <button type="button" data-piece="window">Window — 1 wood + 1 stone</button>
+      </div>
+      <p id="build-selected" class="tiny">Selected: none — open this menu with B (or H)</p>
+      <button id="btn-build-close" type="button" class="secondary">Close (B)</button>
+    </div>
+  </div>
+  <div id="pause" class="overlay hidden">
+    <div class="panel wide">
+      <h1>Paused</h1>
+      <p id="test-build-badge-pause" class="test-build-badge hidden" aria-live="polite"></p>
+      <p id="pause-version" class="version-tag">v0.1.0</p>
+      <p id="offline-pill" class="pill dim">Offline…</p>
+      <p class="sub">Combat is off while paused. Escape or Resume to continue.</p>
+      <div class="grid-btns">
+        <button id="btn-resume" type="button" class="primary">Resume</button>
+        <button id="btn-ready" type="button">I'm Ready to Battle</button>
+        <button id="btn-safe" type="button">Safe Build</button>
+        <button id="btn-save" type="button">Save Now</button>
+        <button id="btn-export" type="button">Export Save</button>
+        <label class="file-btn">Import Save<input id="import-file" type="file" accept="application/json,.json" hidden /></label>
+        <button id="btn-mute" type="button">Mute: Off</button>
+        <button id="btn-quality" type="button">Quality: Medium</button>
+        <button id="btn-weather" type="button">Weather: Off</button>
+        <button id="btn-appear" type="button">Customize Look</button>
+        <button id="btn-help" type="button">Controls</button>
+        <button id="btn-install-pause" type="button">Install / offline</button>
+        <a id="btn-download-zip" class="file-btn" href="./download/escape-green.zip" download>Download ZIP archive</a>
+      </div>
+      <div id="appear-panel" class="hidden">
+        <label>Hair <input id="col-hair" type="color" value="#f5d94a" /></label>
+        <label>Shirt <input id="col-top" type="color" value="#3a7fd4" /></label>
+        <label>Pants <input id="col-pants" type="color" value="#9b7bc8" /></label>
+        <label>Shoes <input id="col-shoes" type="color" value="#4a2f6a" /></label>
+      </div>
+      <p class="warn">Saves stay on this device for this site address. Export a JSON backup before powerwash or clearing site data. Persistence is requested, not guaranteed. Changing origin/port starts a fresh save. ZIP download is not a file:// installer.</p>
+            <p id="save-msg" class="save-msg"></p>
+      <p id="build-meta" class="tiny"></p>
+    </div>
+  </div>
+
+  <div id="update-banner" class="hidden" role="status">
+    <span id="update-banner-msg">Update ready — Save and restart.</span>
+    <button id="btn-update" type="button">Save &amp; restart</button>
+    <button id="btn-update-later" type="button">Later</button>
+  </div>
+
 </body>
 </html>

@@ -1,0 +1,21 @@
+Escape Green — Install / offline play
+=====================================
+
+Hosted install (including GitHub Pages project subpath):
+- Open the game at a URL that ends with a slash, e.g.
+  https://<user>.github.io/escape-green/
+  (not …/escape-green without the slash).
+- First visit must be online until the HUD shows “Offline ready”.
+- Bookmark and/or your browser’s “Install page / Install app” when offered
+  (exact ChromeOS menu labels vary — verify on device).
+- Quit the browser fully, disable network, cold-launch from bookmark/Launcher.
+  Origin host may be unreachable; assets must come from the service worker cache.
+
+ZIP (./download/escape-green.zip):
+- Static site mirror for backup/hosting — NOT a file:// app installer.
+- Archive filename matches the project path name; the game title is Escape Green.
+
+Saves are origin-scoped (scheme+host+port). Keep the same URL prefix.
+IndexedDB database name and Workbox cacheId prefix are `escape-green` so this
+game never collides with a previous game on the
+same GitHub Pages origin.

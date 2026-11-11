@@ -1,10 +1,10 @@
 {
   "name": "Escape Green",
   "version": "0.2.0",
-  "builtAtUtc": "20261111T060813Z",
+  "builtAtUtc": "20261111T064715Z",
   "channel": "hosted-qa-release-candidate",
   "testApi": false,
   "sourcemaps": false,
   "downloadZip": "download/escape-green.zip",
-  "notes": "Escape Green 0.2.0-r4. The first-person held item now matches the selected hotbar slot (sword, pickaxe, axe, a small textured cube for blocks, torch, bread for food, empty hand otherwise) and the pickaxe plays a dig swing on left-click. The sword sits bottom-right like the HUD mock and is capped at about 15% of the screen width. Bunnies use a light cream/white coat with pink inner ears and a soft underside shadow instead of a heavy dark outline. F6 meadow lands about 6–10 m from 2–3 slightly larger chickens. Meadow on F6, unified block mining, calm readout/toast, F7, 40–500 ms double-tap, phone 390 px I/B, egSchema v1→v2, escape-green IDB/cacheId, and the SW denylist are unchanged from r3. PROXY High <=150, Low <=62. Do not mutate after SHA256SUMS."
+  "notes": "Escape Green 0.2.0-r5. Sand, sandstone, snow and ice are placeable the same way as wood, stone, leaves and dirt: from the build panel (B), the backpack (I), hotbar assignment, and right-click. The place hint is now 'Select a block to place'. Held-item matching, sword size cap, cream bunnies, closer meadow chickens, F6 meadow, unified mining, F7, 40-500 ms double-tap, phone 390 px I/B, egSchema v1 to v2, escape-green IDB/cacheId, and the SW denylist are unchanged from r4. PROXY High <=150, Low <=62. Do not mutate after SHA256SUMS."
 }

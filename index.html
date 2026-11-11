@@ -18,8 +18,8 @@
   <meta name="description" content="Escape Green — offline slime adventure" />
   <link rel="icon" type="image/svg+xml" href="./assets/favicon-CZcMHXGO.svg" />
   <title>Escape Green</title>
-  <script type="module" crossorigin src="./assets/index-BOQrKhxH.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-EIh8Mopv.css">
+  <script type="module" crossorigin src="./assets/index-B-Z2HMdN.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Bqy2BV9U.css">
 <link rel="manifest" href="./manifest.webmanifest"></head>
 <body>
   <div id="no-webgl" class="overlay hidden">
@@ -54,7 +54,7 @@
       <div id="hotbar" aria-label="Hotbar"></div>
       <div id="hud-util">
         <button id="btn-bag" type="button" class="hud-icon-btn" title="Backpack (I)" aria-label="Open backpack">I</button>
-        <button id="btn-build" type="button" class="hud-icon-btn" title="Build house (B)" aria-label="Open build menu (B)">B</button>
+        <button id="btn-build" type="button" class="hud-icon-btn" title="Build (B)" aria-label="Open build menu (B)">B</button>
       </div>
     </div>
     <div id="legacy-hud" hidden>
@@ -137,7 +137,7 @@
         <li>Slimes never attack first. After you hit one, nearby slimes join in. Walk more than 40 m from where you hit to calm them.</li>
         <li>If you run out of hearts you wake up at home. Some coins drop at the spot so you can go pick them up.</li>
         <li>Number keys <kbd>1</kbd>–<kbd>7</kbd> switch the hotbar. Hold a sword to fight.</li>
-        <li>Press <kbd>I</kbd> to open your backpack and craft. Press <kbd>B</kbd> to build.</li>
+        <li>Press <kbd>I</kbd> to open your backpack and craft. Press <kbd>B</kbd> to pick a block or a house piece, then right-click to place.</li>
         <li>Animals are friendly and never hurt you. They also never make slimes angry.</li>
         <li><kbd>C</kbd> or <kbd>Home</kbd> (or Look button) recenters the camera if it tips up.</li>
         <li>Esc = pause / save / install tips.</li>
@@ -172,10 +172,13 @@
     </div>
   </div>
 
-  <div id="build-overlay" class="overlay hidden" role="dialog" aria-label="Build house">
+  <div id="build-overlay" class="overlay hidden" role="dialog" aria-label="Build">
     <div class="panel wide">
-      <h2>Build your house</h2>
-      <p class="tiny">Gather wood and stone, pick a piece, then look at the ground and right-click to place. Press X to remove a piece you are looking at.</p>
+      <h2>Build</h2>
+      <p class="tiny">Pick a block or a house piece, then look at the ground and right-click to place. Press X to remove something you are looking at.</p>
+      <p class="tiny">Blocks</p>
+      <div id="build-blocks" class="build-blocks"></div>
+      <p class="tiny">House pieces</p>
       <div id="build-list" class="shop-list">
         <button type="button" data-piece="floor">Floor — 1 wood</button>
         <button type="button" data-piece="wall">Wall — 2 wood</button>

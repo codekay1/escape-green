@@ -1,10 +1,10 @@
 {
   "name": "Escape Green",
-  "version": "0.2.0",
-  "builtAtUtc": "20261111T064715Z",
+  "version": "0.3.0",
+  "builtAtUtc": "20261111T080346Z",
   "channel": "hosted-qa-release-candidate",
   "testApi": false,
   "sourcemaps": false,
   "downloadZip": "download/escape-green.zip",
-  "notes": "Escape Green 0.2.0-r5. Sand, sandstone, snow and ice are placeable the same way as wood, stone, leaves and dirt: from the build panel (B), the backpack (I), hotbar assignment, and right-click. The place hint is now 'Select a block to place'. Held-item matching, sword size cap, cream bunnies, closer meadow chickens, F6 meadow, unified mining, F7, 40-500 ms double-tap, phone 390 px I/B, egSchema v1 to v2, escape-green IDB/cacheId, and the SW denylist are unchanged from r4. PROXY High <=150, Low <=62. Do not mutate after SHA256SUMS."
+  "notes": "Escape Green 0.3.0. Each biome has a village (Vine Hollow, Sunwell, Frostpine, and Cloverfold) with protected walkable buildings, friendly villagers, F-to-talk lines, and coin trades (bread for 5, a stone sword for 10). A Vine Hollow sign sits on the path about 90 m from spawn. F5 cycles village centers when ?debug is on. Saves migrate egSchema v2 to v3 with no loss. No character customization. PROXY High <=150, Low <=62. Do not mutate after SHA256SUMS."
 }
